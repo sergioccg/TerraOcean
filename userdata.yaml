@@ -1,0 +1,24 @@
+#cloud-config
+# Documento acerca de este lenguaje:
+# https://cloudinit.readthedocs.io/en/latest/topics/examples.html
+
+package_upgrade: true
+
+output:
+  all: '| tee -a /var/log/cloud-init-output.log'
+
+packages:
+# - apache2
+# - mysql-server
+# - php
+# - php-mysql
+ 
+runcmd:
+ - export PATH=$PATH:/usr/bin
+ - cd /var/www/
+ - sudo git clone https://github.com/WordPress/WordPress.git
+ - cd WordPress
+ - mv -f * .[^.]* ../html
+ - cd ..
+ - rm -r WordPress
+ - rm ./html/index.html
